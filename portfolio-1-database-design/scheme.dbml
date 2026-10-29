@@ -1,0 +1,97 @@
+Table faculty {
+  faculty_id int [pk, increment]
+  name varchar(100) [not null]
+}
+
+Table department{
+  dept_id int [pk, increment]
+  name varchar(100) [not null]
+  faculty_id int [not null, ref: > faculty.faculty_id]
+}
+
+Table programme{
+  programme_id int [pk, increment]
+  name varchar(100) [not null]
+  dept_id int [not null, ref:> department.dept_id]
+  duration_years int
+}
+
+Table student{
+  student_id int [pk, increment]
+  matric_no varchar(20) [unique, not null]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  email varchar(100) [unique]
+  programme_id int [not null, ref:> programme.programme_id]
+  entry_year int
+  current_level int
+}
+
+Table lecturer{
+  lecturer_id int [pk, increment]
+  staff_no varchar(20) [not null, unique]
+  first_name varchar(50) [not null]
+  last_name varchar(50) [not null]
+  email varchar(100) [unique]
+  academic_rank varchar(50)
+  dept_id int [not null, ref:> department.dept_id]
+}
+
+Table course {
+  course_code varchar(10) [pk]
+  title varchar(150) [not null]
+  credit_units int [not null, note:'CHECK 1-6, added in SQL']
+  level int [not null]
+  dept_id int [not null, ref: > department.dept_id]
+}
+
+Table academic_session {
+  session_id int [pk, increment]
+  name varchar(20) [not null, unique]
+  start_date date
+  end_date date
+}
+
+Table course_offering{
+  offering_id int [pk, increment]
+  course_code varchar(10) [not null, ref:> course.course_code]
+  session_id int [not null, ref:> academic_session.session_id]
+  semester int [not null, note:'CHECK 1 or 2']
+  lecturer_id int [not null, ref: > lecturer.lecturer_id]
+  capacity int [not null, note: 'CHECK > 0']
+
+  indexes {
+    (course_code, session_id, semester) [unique]
+  }
+}
+
+Table registration {
+  registration_id int [pk, increment]
+  student_id int [not null, ref:> student.student_id]
+  offering_id int [not null, ref:> course_offering.offering_id]
+  reg_date timestamp [not null, default: `now()`]
+  status varchar(20) [not null, default: 'registered', note: 'CHECK registered, dropped']
+
+  indexes {
+    (student_id, offering_id) [unique]
+  }
+}
+
+Table result {
+  result_id int [pk, increment]
+  registration_id int [not null, unique, ref:- registration.registration_id]
+  ca_score int [note: 'CHECK 0-40']
+  exam_score int [note: 'CHECK 0-60']
+  status varchar(20) [not null, default: 'draft', note:'CHECK draft, approved, published']
+  entered_by int [not null, ref: > lecturer.lecturer_id]
+  entered_at timestamp [not null, default: `now()`]
+}
+
+Table grade_scale {
+  grade char(1) [pk]
+  min_score int [not null, note:'CHECK 0-100']
+  max_score int [not null, note: 'CHECK 0-100, >= min_score']
+  grade_point int [not null, note: 'CHECK 0-5']
+
+  Note: 'Lookup table. Matched to result by score range, not by foreign key'
+}
