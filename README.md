@@ -96,7 +96,7 @@ Each portfolio folder has its own README explaining what was done, how it was te
 ## AI Use Declaration
 
 - **AI tool used:** Claude (Anthropic)
-- **What it was used for:** Explaining database concepts such as primary keys, foreign keys and normalisation; reviewing my DBML design for errors; drafting README structure
+- **What it was used for:** Explaining database concepts such as primary keys, foreign keys and normalisation; reviewing my DBML design for errors; drafting README structure, learning the syntax of DBML and SQL
 - **How output was verified:**  I wrote and ran all scripts myself in PostgreSQL, tested every constraint with deliberate invalid inserts, and revised the design where I disagreed with or did not understand a suggestion
 
 ---
