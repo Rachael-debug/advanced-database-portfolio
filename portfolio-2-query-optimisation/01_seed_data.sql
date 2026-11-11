@@ -43,3 +43,34 @@ JOIN (VALUES
 ) AS p(dept_id, prefix) ON p.dept_id = d.dept_id
 CROSS JOIN generate_series(100, 400, 100) AS lvl
 CROSS JOIN generate_series(1, 10) AS n;
+
+INSERT INTO academic_session (name, start_date, end_date)
+SELECT y || '/' || (y+1), make_date(y, 10, 1), make_date(y + 1, 7, 31)
+FROM generate_series(2020, 2025) AS y;
+
+INSERT INTO course_offering (course_code, session_id, semester, lecturer_id, capacity)
+SELECT
+	c.course_code,
+	s.session_id,
+	CASE WHEN right(c.course_code, 2)::int % 2 = 1 THEN 1 ELSE 2 END,
+	l.lecturer_id,
+	200
+FROM course c
+CROSS JOIN academic_session s
+JOIN lecturer l
+	ON l.staff_no ='LMU/STF/' ||lpad((c.dept_id * 100 + 1 + (right(c.course_code, 2)::int + s.session_id) % 10)::text, 4, '0');
+
+SELECT lecturer_id, staff_no, dept_id FROM lecturer WHERE dept_id = 1
+
+SELECT setseed(0.42);
+
+INSERT INTO student (matric_no, first_name, last_name, email, programme_id, entry_year, current_level)
+SELECT
+  'LMU/' || (2020 + n % 6) || '/' || lpad(n::text, 5, '0'),
+  (ARRAY['Tolu','Musa','Chioma','Ade','Fatima','Obinna','Zainab','Tunde','Ifeoma','Sani'])[1 + floor(random() * 10)::int],
+  (ARRAY['Adeyemi','Ibrahim','Okafor','Bello','Eze','Lawal','Okeke','Abubakar','Balogun','Nwosu'])[1 + floor(random() * 10)::int],
+  'student' || n || '@students.lmu.edu.ng',
+  1 + floor(random() * 20)::int,
+  2020 + n % 6,
+  LEAST((2025 - (2020 + n % 6) + 1) * 100, 400)
+FROM generate_series(1, 10000) AS n;
