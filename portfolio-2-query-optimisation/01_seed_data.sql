@@ -60,8 +60,6 @@ CROSS JOIN academic_session s
 JOIN lecturer l
 	ON l.staff_no ='LMU/STF/' ||lpad((c.dept_id * 100 + 1 + (right(c.course_code, 2)::int + s.session_id) % 10)::text, 4, '0');
 
-SELECT lecturer_id, staff_no, dept_id FROM lecturer WHERE dept_id = 1
-
 SELECT setseed(0.42);
 
 INSERT INTO student (matric_no, first_name, last_name, email, programme_id, entry_year, current_level)
@@ -74,3 +72,36 @@ SELECT
   2020 + n % 6,
   LEAST((2025 - (2020 + n % 6) + 1) * 100, 400)
 FROM generate_series(1, 10000) AS n;
+
+INSERT INTO registration (student_id, offering_id, reg_date, status)
+SELECT
+  st.student_id,
+  o.offering_id,
+  sess.start_date + floor(random() * 21)::int,
+  CASE WHEN random() < 0.01 THEN 'dropped' ELSE 'registered' END
+FROM student st
+JOIN programme p ON p.programme_id = st.programme_id
+JOIN academic_session sess
+  ON extract(year FROM sess.start_date) BETWEEN st.entry_year AND st.entry_year + 3
+JOIN course c
+  ON c.dept_id = p.dept_id
+ AND c.level = (extract(year FROM sess.start_date) - st.entry_year + 1) * 100
+JOIN course_offering o
+  ON o.course_code = c.course_code
+ AND o.session_id = sess.session_id;
+
+INSERT INTO result (registration_id, ca_score, exam_score, status, entered_by, entered_at)
+SELECT
+  r.registration_id,
+  10 + floor(random() * 31)::int,
+  CASE WHEN s.name = '2025/2026' AND o.semester = 2 THEN NULL
+       ELSE 15 + floor(random() * 46)::int END,
+  CASE WHEN s.name <> '2025/2026' THEN 'published'
+       WHEN o.semester = 1 THEN 'approved'
+       ELSE 'draft' END,
+  o.lecturer_id,
+  s.start_date + CASE WHEN o.semester = 1 THEN 120 ELSE 270 END
+FROM registration r
+JOIN course_offering o ON o.offering_id = r.offering_id
+JOIN academic_session s ON s.session_id = o.session_id
+WHERE r.status = 'registered';
