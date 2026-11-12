@@ -1,7 +1,7 @@
 # Portfolio 5: Distributed and Cloud Database Exercise
 
 **Case study:** Lagos Metropolitan University (LMU) Student Result Portal
-**Platform:** MongoDB Atlas, free M0 cluster (a 3-member replica set managed in the cloud)
+**Platform:** MongoDB Atlas, free M0 cluster (a 3-member replica set managed in the cloud), MongoDB 8.0, hosted in AWS Cape Town (af-south-1)
 
 ## What this portfolio covers
 
@@ -60,7 +60,7 @@ For the LMU portal, score entry and approval should use `w: "majority"`, so an a
 | Query execution on the server (`explain()`, Portfolio 4) | about 1 ms |
 | Full round trip from Lagos (3 runs) | 194 ms, 288 ms, 192 ms |
 
-More than 99% of the time was network travel between Lagos and the data centre, not query processing. In a cloud database, where the data is located can matter more than how efficient the query is. For a Nigerian university, a replica in or near Nigeria would improve response times far more than additional indexes. Atlas supports placing replica set members in several regions, so reads can be served by the closest copy.
+More than 99% of the time was network travel between Lagos and the AWS data centre in Cape Town, not query processing. In a cloud database, where the data is located can matter more than how efficient the query is. For a Nigerian university, a replica in or near Nigeria would improve response times far more than additional indexes. Atlas supports placing replica set members in several regions, so reads can be served by the closest copy.
 
 ### 5. Storage
 
