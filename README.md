@@ -63,7 +63,7 @@ Each portfolio folder has its own README explaining what was done, how it was te
 | 3 | Transactions and Concurrency | Completed |
 | 4 | NoSQL and Advanced Data Models | Completed |
 | 5 | Distributed and Cloud Database Exercise | Completed |
-| – | Final Documentation and Reflection | In Progress |
+| – | Final Documentation and Reflection | Completed |
 
 ---
 
