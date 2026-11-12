@@ -112,7 +112,6 @@ The surname index gave little benefit because matching students were spread acro
 
 | Evidence | File |
 |---|---|
-| Index experiments | `screenshots/lesson1-*.png` |
 | Row counts after loading data | `screenshots/01-row-counts.png` |
 | Q1–Q4 plans before indexes | `screenshots/02-before-q*.png` |
 | List of indexes | `screenshots/03-indexes.png` |
