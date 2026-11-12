@@ -52,16 +52,12 @@ FROM (
 WHERE position <= 10;
 
 -- Q4, the pass rate per faculty
-EXPLAIN ANALYZE
 SELECT f.name AS faculty,
        count(*) AS results,
-       round(100.0 * count(*) FILTER (WHERE v.grade <> 'F') / count(*), 1) AS pass_rate_pct
-FROM v_result_grade v
-JOIN course_offering o     ON o.offering_id = v.offering_id
-JOIN academic_session sess ON sess.session_id = o.session_id
-JOIN course c              ON c.course_code = o.course_code
-JOIN department d          ON d.dept_id = c.dept_id
-JOIN faculty f             ON f.faculty_id = d.faculty_id
+       round(100.0 * count(*) FILTER (WHERE m.grade <> 'F') / count(*), 1) AS pass_rate_pct
+FROM mv_result_summary m
+JOIN academic_session sess ON sess.session_id = m.session_id
+JOIN faculty f             ON f.faculty_id = m.faculty_id
 WHERE sess.name = '2024/2025'
 GROUP BY f.name
 ORDER BY pass_rate_pct DESC;
