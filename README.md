@@ -58,12 +58,12 @@ Each portfolio folder has its own README explaining what was done, how it was te
 
 | Portfolio | Activity | Status |
 |---|---|---|
-| 1 | Database Design and Modelling | Completed |
-| 2 | Query Processing and Optimisation | Completed |
-| 3 | Transactions and Concurrency | Completed |
-| 4 | NoSQL and Advanced Data Models | Completed |
-| 5 | Distributed and Cloud Database Exercise | Completed |
-| – | Final Documentation and Reflection | Completed |
+| 1 | Database Design and Modelling | Complete |
+| 2 | Query Processing and Optimisation | Complete |
+| 3 | Transactions and Concurrency | Complete |
+| 4 | NoSQL and Advanced Data Models | Complete |
+| 5 | Distributed and Cloud Database Exercise | Complete |
+| – | Final Documentation and Reflection | Complete |
 
 ---
 
@@ -86,9 +86,9 @@ Each portfolio folder has its own README explaining what was done, how it was te
    ```
    psql -d lmu_result_portal -f portfolio-1-database-design/schema.sql
    ```
-3. Load sample data (once added):
+3. Load the test data:
    ```
-   psql -d lmu_result_portal -f portfolio-1-database-design/seed_data.sql
+   psql -d lmu_result_portal -f portfolio-2-query-optimisation/01_seed_data.sql
    ```
 
 ---
@@ -96,8 +96,8 @@ Each portfolio folder has its own README explaining what was done, how it was te
 ## AI Use Declaration
 
 - **AI tool used:** Claude (Anthropic)
-- **What it was used for:** Explaining database concepts such as primary keys, foreign keys and normalisation; reviewing my DBML design for errors; drafting README structure, learning the syntax of DBML and SQL
-- **How output was verified:**  I wrote and ran all scripts myself in PostgreSQL, tested every constraint with deliberate invalid inserts, and revised the design where I disagreed with or did not understand a suggestion
+- **What it was used for:** explaining database concepts as I went (keys, normalisation, indexes, execution plans, transactions, isolation, replication and sharding); checking my DBML design and schema for mistakes; walking me through SQL and MongoDB syntax; helping me debug errors; and helping me structure and draft the README files and my portfolio documentation.
+- **How output was verified:** I ran every script myself in PostgreSQL (pgAdmin) and MongoDB Atlas (Compass), recorded my own timings and results, and compared them with the execution plans. I tested every constraint with data that should be rejected, and investigated any result that didn't match what I expected.
 
 ---
 
