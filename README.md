@@ -58,9 +58,9 @@ Each portfolio folder has its own README explaining what was done, how it was te
 
 | Portfolio | Activity | Status |
 |---|---|---|
-| 1 | Database Design and Modelling | In progress |
-| 2 | Query Processing and Optimisation | Not started |
-| 3 | Transactions and Concurrency | Not started |
+| 1 | Database Design and Modelling | Completed |
+| 2 | Query Processing and Optimisation | Completed |
+| 3 | Transactions and Concurrency | In Progress |
 | 4 | NoSQL and Advanced Data Models | Not started |
 | 5 | Distributed and Cloud Database Exercise | Not started |
 | – | Final Documentation and Reflection | Not started |
